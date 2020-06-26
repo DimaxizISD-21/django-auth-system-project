@@ -4,10 +4,19 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        Добро пожаловать, {{ user.first_name }}!
+        <h4>Добро пожаловать, {{ user.first_name }} {{ user.last_name }}!</h4>
+        {% if user.is_staff %}
+            Является сотрудником компании
+            <br>
+            Номер телефона: {{ user.phone_number }}
+            <br>
+            Отдел: {{ user.department }}
+        {% else %}
+            <p>Не является сотрудником</p>
+        {% endif %}
         <p><a href="{% url 'logout' %}">Выход</a></p>
     {% else %}
-        <h3>Вы не войшли в систему!</h3>
+        <h4>Вы не войшли в систему!</h4>
         <a href="{% url 'login' %}">Войти</a>
             |
         <a href="{% url 'signup' %}">Зарегистрироваться</a>
