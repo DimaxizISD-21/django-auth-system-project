@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-import secrets
 
 # Create your models here.
 
@@ -28,7 +27,6 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
     def create_superuser(self, phone_number, first_name, last_name, password=None):
         user = self.create_user(
             phone_number=phone_number,
@@ -42,10 +40,6 @@ class CustomUserManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
         return user
-
-        # secrets_generate = secrets.SystemRandom()
-        # otp = secrets_generate.randrange(1000, 9999)
-        # print(f"OTP-password: {str(otp)}")
 
 
 class CustomUser(AbstractBaseUser):
@@ -79,3 +73,13 @@ class CustomUser(AbstractBaseUser):
     class Meta:
         verbose_name = "Пользователя"
         verbose_name_plural = "Пользователи"
+
+class OtpAuthentificate(models.Model):
+    otp_password = models.CharField(max_length=4, verbose_name="OTP-пароль")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+
+    USERNAME_FIELD = ''
+
+    class Meta:
+        verbose_name = "OTP-пароль"
+        verbose_name_plural = "OTP-пароли"

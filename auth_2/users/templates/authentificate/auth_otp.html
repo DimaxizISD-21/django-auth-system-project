@@ -1,0 +1,32 @@
+{% extends 'base_for_otp.html' %}
+
+{% block title %}OTP - verification{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h3>OTP - Аутентификация</h3>
+    <form method="post">
+        {% csrf_token %}
+            <div class="form-group">
+                {{ form|crispy }}
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <button class="btn btn-primary" onclick="" type="submit">Отправить</button>
+                    </div>
+                </div>
+            </div>
+    </form>
+    <br>
+    <form method="get">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <button class="btn btn-primary" type="submit">Сгенерировать OTP - пароль</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
